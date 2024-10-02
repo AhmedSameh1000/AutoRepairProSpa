@@ -1,0 +1,12 @@
+.form-container {
+  border: 1px solid black;
+  padding: 20px;
+  margin: 20px;
+}
+.form-group {
+  margin-bottom: 1.5rem;
+}
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+}

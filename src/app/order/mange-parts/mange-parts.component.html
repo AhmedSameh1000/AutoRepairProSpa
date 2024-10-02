@@ -1,0 +1,117 @@
+<div class="container mt-4">
+  <h2>{{ "Parts" | translate }}</h2>
+  <div *ngIf="parts.length <= 0" class="alert alert-warning" role="alert">
+    {{ "No parts available. Please add a new part to continue." | translate }}
+  </div>
+
+  <form [formGroup]="partsForm">
+    <div formArrayName="parts">
+      <div
+        *ngFor="let part of parts.controls; let i = index"
+        [formGroupName]="i"
+        class="d-flex gap-1 mb-2"
+      >
+        <div>
+          <div class="form-group">
+            <label for="description">{{ "Description" | translate }}</label>
+            <input
+              #descreption
+              type="text"
+              class="form-control"
+              formControlName="description"
+              placeholder="Enter description"
+            />
+          </div>
+        </div>
+        <div>
+          <div class="form-group">
+            <label for="price">{{ "Price" | translate }}</label>
+            <input
+              #Price
+              type="number"
+              class="form-control"
+              formControlName="price"
+              min="0"
+              placeholder="Price"
+              (input)="calculateTotal(i)"
+            />
+          </div>
+        </div>
+        <div>
+          <div class="form-group">
+            <label for="qty">{{ "Quantity" | translate }}</label>
+            <input
+              #Quantity
+              type="number"
+              class="form-control"
+              min="0"
+              formControlName="qty"
+              placeholder="Quantity"
+              (input)="calculateTotal(i)"
+            />
+          </div>
+        </div>
+        <div>
+          <div class="form-group">
+            <label for="total">{{ "Total" | translate }}</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="total"
+              placeholder="Total"
+              readonly
+              #Total
+            />
+          </div>
+        </div>
+        <div style="width: 10%" class="d-flex align-items-center gap-2">
+          <i
+            (click)="DeletePart(i, part.get('id').value)"
+            class="fs-5 mt-2 fa-solid fa-trash pointer"
+            style="margin-bottom: -10px"
+          ></i>
+          <i
+            (click)="
+              SavePart(
+                part.get('id').value,
+                descreption.value,
+                Quantity.value,
+                Price.value,
+                Total.value
+              )
+            "
+            class="fs-5 mt-2 fa-solid fa-floppy-disk pointer"
+            style="margin-bottom: -10px"
+          ></i>
+          <i class=""></i>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex justify-content-end mt-1">
+      <button
+        [disabled]="!IsValidToAddNewPart()"
+        type="button"
+        class="btn btn-primary mb-2"
+        (click)="addPart()"
+      >
+        <i class="fa-solid fa-square-plus"></i>
+      </button>
+    </div>
+  </form>
+</div>
+<div class="container mt-4" *ngIf="parts.length > 0">
+  <h2>{{ "Parts Summary" | translate }}</h2>
+  <div class="alert alert-info">
+    <p>
+      <strong>{{ "Total Parts" | translate }}</strong> {{ parts.length }}
+    </p>
+    <p>
+      <strong>{{ "Total Quantity" | translate }}</strong>
+      {{ getTotalQuantity() }}
+    </p>
+    <p>
+      <strong>{{ "Total Price" | translate }}</strong>
+      {{ getTotalPrice() | currency : "EGP" }}
+    </p>
+  </div>
+</div>

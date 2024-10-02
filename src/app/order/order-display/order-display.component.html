@@ -1,0 +1,68 @@
+<div class="p-2" style="overflow-y: auto">
+  <form [formGroup]="OrderForm">
+    <div class="d-flex gap-2">
+      <!-- Customer Select -->
+      <div class="form-group mb-3" style="width: 60%">
+        <label for="customer"> {{ "Customer" | translate }}</label>
+        <select class="form-control" id="customer" formControlName="CustomerId">
+          <option *ngFor="let customer of Customers" [value]="customer.id">
+            {{ customer.fullName }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Order Type Select -->
+      <div class="form-group mb-3" style="width: 40%">
+        <label for="orderType"> {{ "Order Type" | translate }}</label>
+        <select
+          class="form-control"
+          id="orderType"
+          formControlName="OrderTypeId"
+        >
+          <option *ngFor="let orderType of OrderTypes" [value]="orderType.id">
+            {{ orderType.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="d-flex gap-2">
+      <!-- Store Select -->
+      <div class="form-group mb-3" style="width: 40%">
+        <label for="store"> Store</label>
+        <select class="form-control" id="store" formControlName="StoreId">
+          <option *ngFor="let store of Stores" [value]="store.id">
+            {{ store.name }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Technical Select -->
+      <div class="form-group mb-3" style="width: 60%">
+        <label for="technical"> {{ "Technical" | translate }}</label>
+        <select
+          class="form-control"
+          id="technical"
+          formControlName="TechnicalId"
+        >
+          <option *ngFor="let technical of Technicals" [value]="technical.id">
+            {{ technical.name }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="form-group mb-3">
+      <label for="description">{{ "Description" | translate }}</label>
+      <textarea
+        id="description"
+        class="form-control"
+        placeholder="Enter description"
+        rows="3"
+        formControlName="Description"
+      ></textarea>
+    </div>
+  </form>
+  <app-galary [OrderId]="data" [ToUpdate]="true"></app-galary>
+</div>

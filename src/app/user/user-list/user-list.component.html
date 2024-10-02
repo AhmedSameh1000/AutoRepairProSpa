@@ -1,0 +1,59 @@
+<div style="overflow-x: auto">
+  <div class="d-flex justify-content-end">
+    <button
+      class="btn btn-primary m-1"
+      (click)="OpenUserMangeDilog()"
+      *ngIf="AuthService.IsManger()"
+    >
+      {{ "Create User" | translate }}
+    </button>
+  </div>
+  <table class="table table-hover" [attr.dir]="Lang === 'ar' ? 'rtl' : 'ltr'">
+    <thead class="bg-dark">
+      <tr>
+        <th scope="col" class="text-light">{{ "name" | translate }}</th>
+        <th scope="col" class="text-light">{{ "Email" | translate }}</th>
+        <th scope="col" class="text-light">{{ "mobile" | translate }}</th>
+        <th scope="col" class="text-light">{{ "Role" | translate }}</th>
+        <th scope="col" class="text-light" *ngIf="AuthService.IsManger()">
+          {{ "Permission" | translate }}
+        </th>
+        <th scope="col" class="text-light" *ngIf="AuthService.IsManger()">
+          {{ "Actions" | translate }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of Users">
+        <th>{{ user.fullName }}</th>
+        <th>{{ user.email }}</th>
+        <td>
+          {{ user.phoneNumber == null ? "unknown" : user.phoneNumber }}
+        </td>
+        <th>{{ user.roleName }}</th>
+
+        <th style="padding: 10px" *ngIf="AuthService.IsManger()">
+          <select
+            class="form-select"
+            aria-label="Default select example"
+            (change)="OnRoleChange($event, user.id)"
+          >
+            <option
+              [selected]="role.id === user.roleId"
+              *ngFor="let role of Roles"
+              value="{{ role.id }}"
+            >
+              {{ role.name }}
+            </option>
+          </select>
+        </th>
+        <th *ngIf="AuthService.IsManger()">
+          <i
+            class="fs-6 fa-solid fa-trash pointer"
+            (click)="DeleteUser(user.id)"
+          ></i>
+        </th>
+      </tr>
+    </tbody>
+  </table>
+</div>

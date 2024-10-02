@@ -1,0 +1,34 @@
+<div style="overflow-x: auto">
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-primary m-1" (click)="ShowDilog()">
+      {{ "Create Store" | translate }}
+    </button>
+  </div>
+  <table class="table table-hover" [attr.dir]="Lang === 'ar' ? 'rtl' : 'ltr'">
+    <thead class="bg-dark">
+      <tr>
+        <th scope="col" class="text-light">{{ "name" | translate }}</th>
+        <th scope="col" class="text-light">{{ "IsActive" | translate }}</th>
+        <th scope="col" class="text-light">{{ "Actions" | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let Store of Stores">
+        <th>{{ Store.name }}</th>
+
+        <td>{{ Store.isActive ? "Yes" : "No" }}</td>
+        <td class="d-flex gap-2">
+          <i
+            class="fs-6 fa-solid fa-pen-to-square pointer"
+            (click)="OpenDilogForEdit(Store.id)"
+          ></i>
+          <i
+            *ngIf="AuthService.IsManger()"
+            class="fs-6 fa-solid fa-trash pointer"
+            (click)="DeleteStore(Store.id)"
+          ></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

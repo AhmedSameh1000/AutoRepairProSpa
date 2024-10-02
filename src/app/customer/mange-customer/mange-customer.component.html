@@ -1,0 +1,139 @@
+<div class="container-fluid mt-5 p-3 position-relative">
+  <mat-icon
+    class="position-absolute"
+    style="top: -39px; right: 10px"
+    matDialogClose
+    >close</mat-icon
+  >
+
+  <h2 class="mb-4" position-absolute>
+    {{ "Create New Customer" | translate }}
+  </h2>
+  <form [formGroup]="CustomerForm">
+    <div class="form-group">
+      <label for="fullName"
+        >{{ "name" | translate }} <span class="text-danger">*</span></label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="fullName"
+        name="fullName"
+        formControlName="fullName"
+        placeholder="Enter full name"
+      />
+      <span
+        class="ms-2 text-danger"
+        *ngIf="
+          CustomerForm.get('fullName').invalid &&
+          CustomerForm.get('fullName').touched
+        "
+      >
+        <span *ngIf="CustomerForm.get('fullName').errors?.['required']">{{
+          "name is required." | translate
+        }}</span>
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label for="phoneNumber"
+        >{{ "Phone Number" | translate }}
+        <span class="text-danger">*</span></label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="phoneNumber"
+        name="phoneNumber"
+        formControlName="phoneNumber"
+        placeholder="Enter phone number"
+      />
+      <span
+        class="ms-2 text-danger"
+        *ngIf="
+          CustomerForm.get('phoneNumber').invalid &&
+          CustomerForm.get('phoneNumber').touched
+        "
+      >
+        <span *ngIf="CustomerForm.get('phoneNumber').errors?.['required']">{{
+          "Phone number is required." | translate
+        }}</span>
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label for="location"
+        >{{ "location" | translate }} <span class="text-danger">*</span></label
+      >
+      <input
+        type="text"
+        class="form-control"
+        id="location"
+        name="location"
+        formControlName="location"
+        placeholder="Enter location"
+      />
+      <span
+        class="ms-2 text-danger"
+        *ngIf="
+          CustomerForm.get('location').invalid &&
+          CustomerForm.get('location').touched
+        "
+      >
+        <span *ngIf="CustomerForm.get('location').errors?.['required']">{{
+          "Location is required." | translate
+        }}</span>
+      </span>
+    </div>
+
+    <div class="form-group">
+      <label for="balance"
+        >{{ "Balance" | translate }} <span class="text-danger">*</span></label
+      >
+      <input
+        type="number"
+        class="form-control"
+        id="balance"
+        name="balance"
+        placeholder="Enter balance"
+        formControlName="balance"
+        step="0.01"
+      />
+      <span
+        class="ms-2 text-danger"
+        *ngIf="
+          CustomerForm.get('balance').invalid &&
+          CustomerForm.get('balance').touched
+        "
+      >
+        <span *ngIf="CustomerForm.get('balance').errors?.['required']">{{
+          "Balance is required." | translate
+        }}</span>
+      </span>
+    </div>
+
+    <div class="form-group form-check">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        id="isActive"
+        name="isActive"
+        formControlName="isActive"
+      />
+      <label class="form-check-label" for="isActive">{{
+        "IsActive" | translate
+      }}</label>
+    </div>
+
+    <div class="d-flex justify-content-end">
+      <button
+        type="button"
+        (click)="CreateCustomer()"
+        class="btn btn-primary"
+        [disabled]="CustomerForm.invalid"
+      >
+        {{ data == null ? ("Create" | translate) : ("Update" | translate) }}
+      </button>
+    </div>
+  </form>
+</div>

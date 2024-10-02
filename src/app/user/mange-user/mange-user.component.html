@@ -1,0 +1,148 @@
+<div class="position-relative p-3">
+  <mat-icon
+    class="position-absolute"
+    style="top: 7px; right: 9px; cursor: pointer"
+    matDialogClose
+    >close</mat-icon
+  >
+  <h2 style="font-weight: bold" class="text-center">
+    {{ "Create New User" | translate }}
+  </h2>
+
+  <form
+    [formGroup]="CreateUserForm"
+    class="container mt-3 p-3 position-relative p-3"
+  >
+    <div class="form-group mb-3">
+      <label for="fullName" class="form-label">{{ "name" | translate }}</label>
+      <input
+        id="fullName"
+        formControlName="fullName"
+        type="text"
+        class="form-control"
+        placeholder="Enter full name"
+      />
+      <div
+        *ngIf="
+          CreateUserForm.get('fullName').invalid &&
+          CreateUserForm.get('fullName').touched
+        "
+        class="text-danger mt-1"
+      >
+        {{ "name is required" | translate }}.
+      </div>
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="email" class="form-label">Email:</label>
+      <input
+        id="email"
+        formControlName="email"
+        type="email"
+        class="form-control"
+        placeholder="Enter email"
+      />
+      <div
+        *ngIf="
+          CreateUserForm.get('email').invalid &&
+          CreateUserForm.get('email').touched
+        "
+        class="text-danger mt-1"
+      >
+        <span *ngIf="CreateUserForm.get('email').errors?.['required']">{{
+          "email is required" | translate
+        }}</span>
+        <span *ngIf="CreateUserForm.get('email').errors?.['email']">{{
+          "Please enter a valid email" | translate
+        }}</span>
+      </div>
+      <div *ngIf="Result">
+        <div class="text-danger mt-1" *ngIf="Result.duplicateEmail == true">
+          {{ "This email is already registered by another user" | translate }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="phoneNumber" class="form-label"
+        >{{ "Phone Number" | translate }}:</label
+      >
+      <input
+        id="phoneNumber"
+        formControlName="phoneNumber"
+        type="text"
+        class="form-control"
+        placeholder="Enter phone number"
+      />
+      <div
+        *ngIf="
+          CreateUserForm.get('phoneNumber').invalid &&
+          CreateUserForm.get('phoneNumber').touched
+        "
+        class="text-danger mt-1"
+      >
+        {{ "Phone Number is required." | translate }}
+      </div>
+      <div *ngIf="Result">
+        <div class="text-danger mt-1" *ngIf="Result.duplicatePhoneNumber">
+          {{
+            "This phone number is already registered by another user"
+              | translate
+          }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="roleId" class="form-label">Role:</label>
+      <select id="roleId" formControlName="roleId" class="form-select">
+        <option [ngValue]="null" disabled selected>Select an Option</option>
+        <option *ngFor="let role of Roles" [value]="role.id">
+          {{ role.name }}
+        </option>
+      </select>
+      <div
+        *ngIf="
+          CreateUserForm.get('roleId').invalid &&
+          CreateUserForm.get('roleId').touched
+        "
+        class="text-danger mt-1"
+      >
+        {{ "Role is required." | translate }}
+      </div>
+    </div>
+
+    <div class="form-group mb-3">
+      <label for="password" class="form-label">{{
+        "Password" | translate
+      }}</label>
+      <input
+        id="password"
+        formControlName="password"
+        type="password"
+        class="form-control"
+        placeholder="Enter password"
+      />
+      <div
+        *ngIf="
+          CreateUserForm.get('password').invalid &&
+          CreateUserForm.get('password').touched
+        "
+        class="text-danger mt-1"
+      >
+        {{ "Password is required." | translate }}
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end">
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="CreateUser()"
+        [disabled]="CreateUserForm.invalid"
+      >
+        {{ "Create User" | translate }}
+      </button>
+    </div>
+  </form>
+</div>

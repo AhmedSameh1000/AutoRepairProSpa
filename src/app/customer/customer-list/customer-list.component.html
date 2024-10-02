@@ -1,0 +1,40 @@
+<div style="overflow-x: auto">
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-primary m-1" (click)="ShowDilog()">
+      {{ "Create Customer" | translate }}
+    </button>
+  </div>
+  <table class="table table-hover" [attr.dir]="Lang === 'ar' ? 'rtl' : 'ltr'">
+    <thead class="bg-dark">
+      <tr>
+        <th scope="col" class="text-light">{{ "name" | translate }}</th>
+        <th scope="col" class="text-light">{{ "mobile" | translate }}</th>
+        <th scope="col" class="text-light">{{ "location" | translate }}</th>
+        <th scope="col" class="text-light">{{ "balance" | translate }}</th>
+        <th scope="col" class="text-light">{{ "IsActive" | translate }}</th>
+        <th *ngIf="AuthService.IsManger()" scope="col" class="text-light">
+          {{ "Actions" | translate }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let Customer of Customers">
+        <th>{{ Customer.fullName }}</th>
+        <td>{{ Customer.phoneNumber }}</td>
+        <td>{{ Customer.location }}</td>
+        <td>{{ Customer.balance }}</td>
+        <td>{{ Customer.isActive ? "Yes" : "No" }}</td>
+        <td class="d-flex gap-2" *ngIf="AuthService.IsManger()">
+          <i
+            class="fs-6 fa-solid fa-pen-to-square pointer"
+            (click)="OpenDilogForEdit(Customer.id)"
+          ></i>
+          <i
+            class="fs-6 fa-solid fa-trash pointer"
+            (click)="DeleteCustomer(Customer.id)"
+          ></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

@@ -1,0 +1,180 @@
+<div
+  class="d-flex gap-2 align-items-center gap-3 flex-wrap"
+  style="overflow-y: auto"
+>
+  <div class="p-3 mt-5 position-relative">
+    <mat-icon
+      class="position-absolute"
+      style="top: -38px; right: 10px; cursor: pointer"
+      matDialogClose
+      >close</mat-icon
+    >
+
+    <h2 *ngIf="!id">{{ "Create New Order" | translate }}</h2>
+    <h2 *ngIf="id">{{ "Update Order" | translate }}</h2>
+    <form [formGroup]="OrderForm">
+      <!-- Photos -->
+      <div class="form-group mb-3" *ngIf="!id">
+        <label for="photos">{{ "Upload Photos" | translate }}</label>
+        <input
+          (change)="onFileChange($event)"
+          type="file"
+          id="photos"
+          class="form-control"
+          accept="image/*"
+          multiple
+          capture="environment"
+        />
+      </div>
+
+      <div class="d-flex gap-2">
+        <!-- Customer Select -->
+        <div class="form-group mb-3" style="width: 60%">
+          <label for="customer"> {{ "Customer" | translate }}</label>
+          <select
+            class="form-control"
+            id="customer"
+            formControlName="CustomerId"
+          >
+            <option *ngFor="let customer of Customers" [value]="customer.id">
+              {{ customer.fullName }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              OrderForm.controls['CustomerId'].invalid &&
+              OrderForm.controls['CustomerId'].touched
+            "
+            class="text-danger"
+          >
+            {{ "Customer is required" | translate }}
+          </div>
+        </div>
+
+        <!-- Order Type Select -->
+        <div class="form-group mb-3" style="width: 40%">
+          <label for="orderType"> {{ "Order Type" | translate }}</label>
+          <select
+            class="form-control"
+            id="orderType"
+            formControlName="OrderTypeId"
+          >
+            <option *ngFor="let orderType of OrderTypes" [value]="orderType.id">
+              {{ orderType.name }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              OrderForm.controls['OrderTypeId'].invalid &&
+              OrderForm.controls['OrderTypeId'].touched
+            "
+            class="text-danger"
+          >
+            {{ "Order Type is required" | translate }}
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex gap-2">
+        <!-- Store Select -->
+        <div class="form-group mb-3" style="width: 40%">
+          <label for="store"> Store</label>
+          <select class="form-control" id="store" formControlName="StoreId">
+            <option *ngFor="let store of Stores" [value]="store.id">
+              {{ store.name }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              OrderForm.controls['StoreId'].invalid &&
+              OrderForm.controls['StoreId'].touched
+            "
+            class="text-danger"
+          >
+            {{ "Store is required" | translate }}
+          </div>
+        </div>
+
+        <!-- Technical Select -->
+        <div class="form-group mb-3" style="width: 60%">
+          <label for="technical"> {{ "Technical" | translate }}</label>
+          <select
+            class="form-control"
+            id="technical"
+            formControlName="TechnicalId"
+          >
+            <option *ngFor="let technical of Technicals" [value]="technical.id">
+              {{ technical.name }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              OrderForm.controls['TechnicalId'].invalid &&
+              OrderForm.controls['TechnicalId'].touched
+            "
+            class="text-danger"
+          >
+            {{ "Technical is required" | translate }}
+          </div>
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group mb-3">
+        <label for="description">{{ "Description" | translate }}</label>
+        <textarea
+          id="description"
+          class="form-control"
+          placeholder="Enter description"
+          rows="3"
+          formControlName="Description"
+        ></textarea>
+        <div
+          *ngIf="
+            OrderForm.controls['Description'].invalid &&
+            OrderForm.controls['Description'].touched
+          "
+          class="text-danger"
+        >
+          {{ "Description is required" | translate }}
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="d-flex justify-content-end m-2">
+        <button
+          *ngIf="!id"
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="OrderForm.invalid"
+          (click)="CreateOrder()"
+        >
+          {{ "Create Order" | translate }}
+        </button>
+      </div>
+      <div class="d-flex justify-content-between m-2">
+        <button
+          (click)="OpenGalary()"
+          *ngIf="id"
+          type="submit"
+          class="btn btn-success"
+        >
+          {{ "Order Images" | translate }}
+        </button>
+        <button
+          *ngIf="id"
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="OrderForm.invalid"
+          (click)="EditOrder()"
+        >
+          {{ "Edit Order" | translate }}
+        </button>
+      </div>
+    </form>
+  </div>
+  <!-- <div *ngIf="firstImageUrl" class="mt-3 me-3">
+    <h5>{{ "Selected Image" | translate }}</h5>
+    <img [src]="firstImageUrl" class="img-fluid" alt="Selected Image" />
+  </div> -->
+</div>

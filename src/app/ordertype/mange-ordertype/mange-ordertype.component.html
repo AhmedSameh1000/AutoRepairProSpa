@@ -1,0 +1,59 @@
+<div class="container-fluid mt-5 p-3 position-relative">
+  <mat-icon
+    class="position-absolute"
+    style="top: -39px; right: 10px"
+    matDialogClose
+    >close</mat-icon
+  >
+
+  <h2 class="mb-4" position-absolute>
+    {{ "Create New OrderType" | translate }}
+  </h2>
+  <form [formGroup]="OrderTypeForm">
+    <div class="form-group">
+      <label for="fullName"
+        >{{ "Name" | translate }} <span class="text-danger">*</span></label
+      >
+      <input
+        type="text"
+        class="form-control"
+        formControlName="Name"
+        placeholder="Enter full name"
+      />
+      <span
+        class="ms-2 text-danger"
+        *ngIf="
+          OrderTypeForm.get('Name').invalid && OrderTypeForm.get('Name').touched
+        "
+      >
+        <span *ngIf="OrderTypeForm.get('Name').errors?.['required']"
+          >{{ "name is required" | translate }}.</span
+        >
+      </span>
+    </div>
+
+    <div class="form-group form-check">
+      <input
+        type="checkbox"
+        class="form-check-input"
+        id="isActive"
+        name="isActive"
+        formControlName="isActive"
+      />
+      <label class="form-check-label" for="isActive">{{
+        "IsActive" | translate
+      }}</label>
+    </div>
+
+    <div class="d-flex justify-content-end">
+      <button
+        type="button"
+        (click)="CreateOrderType()"
+        class="btn btn-primary"
+        [disabled]="OrderTypeForm.invalid"
+      >
+        {{ data == null ? ("Create" | translate) : ("Update" | translate) }}
+      </button>
+    </div>
+  </form>
+</div>

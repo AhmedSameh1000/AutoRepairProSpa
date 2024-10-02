@@ -1,0 +1,160 @@
+<div class="p-4 bg-light rounded container-fluid">
+  <form>
+    <!-- Row 1 -->
+    <div class="d-flex gap-2 justify-content-between mb-4">
+      <div>
+        <div class="form-group">
+          <label for="total">{{ "parts Cost" | translate }}</label>
+          <input
+            type="text"
+            id="total"
+            [(ngModel)]="partsCost"
+            name="partsCost"
+            readonly
+            class="form-control form-control-lg"
+            placeholder="Enter total"
+          />
+        </div>
+      </div>
+      <div>
+        <div class="form-group">
+          <label for="balance"> {{ "Balance" | translate }}</label>
+          <input
+            type="text"
+            id="balance"
+            class="form-control form-control-lg"
+            placeholder="Enter balance"
+            name="CustomerBalance"
+            readonly
+            [(ngModel)]="CustomerBalance"
+          />
+        </div>
+      </div>
+      <div style="width: 30%">
+        <div class="form-group">
+          <label for="discount" class="text-nowrap"
+            >{{ "Discount" | translate }}
+          </label>
+          <input
+            min="0"
+            max="100"
+            type="number"
+            id="discount"
+            class="form-control form-control-lg"
+            placeholder="Enter discount"
+            [(ngModel)]="discount"
+            name="discount"
+            (input)="CalcNetCost()"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="row mb-4">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="net">{{ "Net" | translate }}</label>
+          <input
+            [(ngModel)]="NetCost"
+            name="NetCost"
+            type="text"
+            id="net"
+            readonly
+            class="form-control form-control-lg"
+            placeholder="Enter net amount"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 3 -->
+    <div
+      class="row mb-4"
+      [ngStyle]="{ display: NetCost === 0 ? 'none' : 'block' }"
+    >
+      <div class="col-md-2">
+        <div class="form-group">
+          <div>
+            <label class="text-nowrap">{{
+              "Payment Method" | translate
+            }}</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              #CashInput
+              id="cash"
+              name="Cash"
+              [(ngModel)]="isCash"
+              (change)="onPaymentMethodChange(CashInput.checked, 0)"
+            />
+            <label class="form-check-label" for="cash">{{
+              "Cash" | translate
+            }}</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              #CreditInput
+              id="credit"
+              name="credit"
+              [(ngModel)]="isCredit"
+              (change)="onPaymentMethodChange(CreditInput.checked, 1)"
+            />
+            <label class="form-check-label text-nowrap" for="credit">{{
+              "Credit" | translate
+            }}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Show inputs based on selected payment methods -->
+    <div class="d-flex justify-content-between gap-2">
+      <div *ngIf="isCash" class="form-group">
+        <label for="cashAmount">{{ "Cash" | translate }}</label>
+        <input
+          type="text"
+          id="cashAmount"
+          [(ngModel)]="cashAmount"
+          name="cashAmount"
+          class="form-control form-control-lg"
+          placeholder="Enter cash amount"
+          (input)="onPaymentMethodChange(CashInput.checked, 0)"
+        />
+      </div>
+      <div *ngIf="isCredit" class="form-group text-nowrap">
+        <label for="creditAmount">{{ "Credit" | translate }}</label>
+        <input
+          type="text"
+          id="creditAmount"
+          [(ngModel)]="creditAmount"
+          name="creditAmount"
+          class="form-control form-control-lg"
+          placeholder="Enter credit amount"
+          (input)="onPaymentMethodChange(CreditInput.checked, 1)"
+        />
+      </div>
+    </div>
+
+    <!-- Row 6 (Submit Button) -->
+    <div class="d-flex justify-content-end">
+      <button
+        (click)="
+          FinishOrder(
+            OrderDetails.orderId,
+            CashInput.checked,
+            CreditInput.checked
+          )
+        "
+        type="submit"
+        class="text-nowrap btn btn-primary btn-lg m-e-3"
+      >
+        {{ "Finish Order" | translate }}
+      </button>
+    </div>
+  </form>
+</div>

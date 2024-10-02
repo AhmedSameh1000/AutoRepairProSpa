@@ -1,0 +1,14 @@
+<gallery [items]="galleryImages"></gallery>
+<div class="mt-3 d-flex justify-content-end" *ngIf="!ToUpdate">
+  <label for="BulkImages" class="btn btn-primary" style="margin: 10px">{{
+    "Import Images" | translate
+  }}</label>
+  <input
+    (change)="OnFileChange($event)"
+    type="file"
+    id="BulkImages"
+    multiple
+    class="d-none"
+    capture="environment"
+  />
+</div>

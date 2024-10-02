@@ -1,0 +1,27 @@
+/* image-gallery.component.css */
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+  padding: 10px;
+}
+
+.image-item img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.image-item img:hover {
+  transform: scale(1.05);
+}
+.MyCont .div {
+  bottom: -100%;
+  transition: bottom 0.3s ease-in-out;
+}
+
+.MyCont:hover .div {
+  bottom: 50%;
+}

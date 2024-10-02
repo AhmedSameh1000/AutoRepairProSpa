@@ -1,0 +1,33 @@
+<div style="overflow-x: auto">
+  <div class="d-flex justify-content-end">
+    <button class="btn btn-primary m-1" (click)="ShowDilog()">
+      {{ "Create OrderType" | translate }}
+    </button>
+  </div>
+  <table class="table table-hover" [attr.dir]="Lang === 'ar' ? 'rtl' : 'ltr'">
+    <thead class="bg-dark">
+      <tr>
+        <th scope="col" class="text-light">{{ "name" | translate }}</th>
+        <th scope="col" class="text-light">{{ "IsActive" | translate }}</th>
+        <th scope="col" class="text-light">{{ "Actions" | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let OrderType of OrderTypes">
+        <th>{{ OrderType.name }}</th>
+        <td>{{ OrderType.isActive ? "Yes" : "No" }}</td>
+        <td class="d-flex gap-2">
+          <i
+            class="fs-6 fa-solid fa-pen-to-square pointer"
+            (click)="OpenDilogForEdit(OrderType.id)"
+          ></i>
+          <i
+            *ngIf="AuthSerVice.IsManger()"
+            class="fs-6 fa-solid fa-trash pointer"
+            (click)="DeleteOrderType(OrderType.id)"
+          ></i>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

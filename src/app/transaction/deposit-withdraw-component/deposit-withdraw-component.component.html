@@ -1,0 +1,75 @@
+<div class="container p-3">
+  <h2 class="text-center">
+    {{ data.isDeposit ? ("Deposit" | translate) : ("Withdraw" | translate) }}
+  </h2>
+  <form>
+    <div class="form-group">
+      <label for="userSelect">{{ "Select Customer" | translate }}</label>
+      <select
+        class="form-control"
+        id="userSelect"
+        (change)="OnCustomerChange($event)"
+      >
+        <option value="" selected disabled>
+          {{ "Select Customer" | translate }}
+        </option>
+        <option
+          value="user1"
+          *ngFor="let Customer of Customers"
+          [value]="[Customer.id, Customer.balance]"
+        >
+          {{ Customer.fullName }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="userBalance">{{ "User Balance" | translate }}</label>
+      <input
+        [(ngModel)]="CustomerBalance"
+        name="CusotmerBalance"
+        type="text"
+        class="form-control"
+        id="userBalance"
+        placeholder="Enter User Balance"
+        disabled
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="amount">{{ "Amount" | translate }}</label>
+      <input
+        [(ngModel)]="Amount"
+        name="amount"
+        type="number"
+        class="form-control"
+        id="amount"
+        placeholder="Enter Amount"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="description">{{
+        "Transaction Description" | translate
+      }}</label>
+      <textarea
+        [(ngModel)]="description"
+        name="description"
+        class="form-control"
+        id="description"
+        rows="3"
+        placeholder="Enter Transaction Description"
+      ></textarea>
+    </div>
+
+    <div class="d-flex justify-content-end">
+      <button
+        [disabled]="!CustomerId || !description || !Amount || Amount <= 0"
+        (click)="SaveTransaction()"
+        type="submit"
+        class="btn btn-primary btn-block mt-2"
+      >
+        {{ "Execute Transaction" | translate }}
+      </button>
+    </div>
+  </form>
+</div>

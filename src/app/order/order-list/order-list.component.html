@@ -1,0 +1,123 @@
+<div style="overflow-x: auto">
+  <div class="d-flex justify-content-between">
+    <div>
+      <strong for="">{{ "Search" | translate }}</strong>
+      <input
+        type="text"
+        class="form-control mb-1"
+        placeholder="Search For any Field"
+        #SearchQuery
+        (input)="OnSearch(SearchQuery.value)"
+      />
+    </div>
+    <button class="btn btn-primary m-1" (click)="ShowDilog()">
+      {{ "Create Order" | translate }}
+    </button>
+  </div>
+  <table class="table table-hover" [attr.dir]="Lang === 'ar' ? 'rtl' : 'ltr'">
+    <thead class="bg-dark">
+      <tr>
+        <th scope="col" class="text-light">{{ "Order Number" | translate }}</th>
+        <th scope="col" class="text-light">
+          {{ "Customer Name" | translate }}
+        </th>
+        <th scope="col" class="text-light">
+          {{ "Customer Mobile" | translate }}
+        </th>
+        <th scope="col" class="text-light">
+          {{ "Order Type Name" | translate }}
+        </th>
+        <th scope="col" class="text-light">{{ "Status" | translate }}</th>
+        <th scope="col" class="text-light">{{ "Store Name" | translate }}</th>
+        <th scope="col" class="text-light">
+          {{ "Technical Name" | translate }}
+        </th>
+        <th scope="col" class="text-light">{{ "Actions" | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let Order of Orders"
+        [ngClass]="{ 'CompletedOrder':  Order.orderStatus == 'Completion', }"
+      >
+        <th>{{ "#" + Order.id }}</th>
+        <th>{{ Order.customerName }}</th>
+        <td>{{ Order.customerPhoneNumber }}</td>
+        <td>{{ Order.orderTypeName }}</td>
+        <td>{{ Order.orderStatus }}</td>
+        <td>{{ Order.storeName }}</td>
+        <td>{{ Order.technicalName }}</td>
+        <td class="d-flex gap-2">
+          <button mat-button [matMenuTriggerFor]="menu">
+            <i class="fa-solid fa-bars"></i>
+            <mat-icon>keyboard_arrow_down</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="DisplayOrder(Order.id)">
+              <li>
+                {{ "show" | translate }}
+                <i class="fs-6 fa-solid fa-eye pointer"></i>
+              </li>
+            </button>
+            <button
+              [disabled]="Order.orderStatus == 'Completion'"
+              mat-menu-item
+              (click)="OpenDilogForEdit(Order.id)"
+            >
+              <li>
+                {{ "Edit" | translate }}
+                <i class="fs-6 fa-solid fa-pen-to-square pointer"></i>
+              </li>
+            </button>
+            <button
+              [disabled]="Order.orderStatus == 'Completion'"
+              mat-menu-item
+              (click)="OpenDilogForParts(Order.id, Order.customerId)"
+            >
+              <li>
+                {{ "Parts" | translate }}
+                <i class="fs-6 fa-solid fa-paste pointer"></i>
+              </li>
+            </button>
+
+            <label
+              [disabled]="Order.orderStatus == 'Completion'"
+              mat-menu-item
+              *ngIf="Order.partsCount >= 1"
+              for="InpFile"
+            >
+              <li>
+                {{ "delevered" | translate }}
+                <i class="fa-solid fa-list"></i>
+              </li>
+              <input
+                (change)="OnFileChange($event, Order.id)"
+                id="InpFile"
+                type="file"
+                multiple
+                class="d-none"
+              />
+            </label>
+            <button
+              [disabled]="Order.orderStatus == 'Completion'"
+              *ngIf="Order.isHavePartsAndDeliveredImages"
+              mat-menu-item
+              (click)="PlacedthisOrder(Order.id)"
+            >
+              <li>
+                {{ "placed order" | translate }}
+                <i class="fs-6 fa-regular fa-credit-card"></i>
+              </li>
+            </button>
+            <button mat-menu-item (click)="DeleteOrder(Order.id)">
+              <li>
+                {{ "Delete" | translate }}
+                <i class="fs-6 fa-solid fa-trash pointer"></i>
+              </li>
+            </button>
+          </mat-menu>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

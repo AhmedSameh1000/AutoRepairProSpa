@@ -1,0 +1,77 @@
+<nav class="sidebar-nav">
+  <ul id="sidebarnav">
+    <li class="sidebar-item" routerLinkActive="active">
+      <a
+        class="sidebar-link waves-effect waves-dark"
+        [routerLink]="['/orders']"
+      >
+        <i class="bi bi-menu-app"></i>
+        <span class="hide-menu">{{ "Orders" | translate }}</span>
+      </a>
+    </li>
+    <li class="sidebar-item" routerLinkActive="active">
+      <a class="sidebar-link waves-effect waves-dark" [routerLink]="['/users']">
+        <i class="fa-solid fa-user-tie"></i>
+        <span class="hide-menu">{{ "Users" | translate }}</span>
+      </a>
+    </li>
+    <li class="sidebar-item" routerLinkActive="active">
+      <a
+        class="sidebar-link waves-effect waves-dark"
+        [routerLink]="['/customers']"
+      >
+        <i class="fa-solid fa-users"></i>
+        <span class="hide-menu">{{ "Customers" | translate }}</span>
+      </a>
+    </li>
+    <li class="sidebar-item" routerLinkActive="active">
+      <a
+        class="sidebar-link waves-effect waves-dark"
+        [routerLink]="['/ordertypes']"
+      >
+        <i class="fa-solid fa-layer-group"></i>
+        <span class="hide-menu">{{ "OrderTypes" | translate }}</span>
+      </a>
+    </li>
+    <li class="sidebar-item" routerLinkActive="active">
+      <a
+        class="sidebar-link waves-effect waves-dark"
+        [routerLink]="['/stores']"
+      >
+        <i class="fa-solid fa-store"></i>
+        <span class="hide-menu">{{ "Stores" | translate }}</span>
+      </a>
+    </li>
+    <li class="sidebar-item" routerLinkActive="active">
+      <a
+        class="sidebar-link waves-effect waves-dark"
+        [routerLink]="['/technicals']"
+      >
+        <i class="fa-solid fa-gears"></i>
+        <span class="hide-menu">{{ "Technicals" | translate }}</span>
+      </a>
+    </li>
+    <li class="sidebar-item" routerLinkActive="active">
+      <a
+        class="sidebar-link waves-effect waves-dark"
+        [routerLink]="['/transactions']"
+      >
+        <i class="fa-solid fa-sack-dollar"></i>
+        <span class="hide-menu">{{ "transactions" | translate }}</span>
+      </a>
+    </li>
+    <li class="sidebar-item">
+      <select
+        (change)="FireEvent($event)"
+        class="p-2 w-100"
+        name="language"
+        id="language-select"
+        [(ngModel)]="CurrentLanguge"
+      >
+        <option *ngFor="let lang of Languages" [value]="lang.lang">
+          {{ lang.name }}
+        </option>
+      </select>
+    </li>
+  </ul>
+</nav>

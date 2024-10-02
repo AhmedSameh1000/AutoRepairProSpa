@@ -1,0 +1,47 @@
+<div style="overflow-x: auto">
+  <div class="d-flex justify-content-end">
+    <button
+      class="btn btn-success m-1"
+      (click)="OpenDepositWithDrawComponent(true)"
+    >
+      {{ "Deposit" | translate }}
+    </button>
+    <button
+      class="btn btn-primary m-1"
+      (click)="OpenDepositWithDrawComponent(false)"
+    >
+      {{ "Withdraw" | translate }}
+    </button>
+  </div>
+  <table class="table table-hover" [attr.dir]="Lang === 'ar' ? 'rtl' : 'ltr'">
+    <thead class="bg-dark">
+      <tr>
+        <th scope="col" class="text-light">{{ "Code" | translate }}</th>
+        <th scope="col" class="text-light">
+          {{ "Customer Name" | translate }}
+        </th>
+        <th scope="col" class="text-light">{{ "User Name" | translate }}</th>
+        <th scope="col" class="text-light">
+          {{ "Transaction Type" | translate }}
+        </th>
+        <th scope="col" class="text-light">
+          {{ "Transaction Date" | translate }}
+        </th>
+        <th scope="col" class="text-light">{{ "Amount" | translate }}</th>
+        <th scope="col" class="text-light">{{ "Description" | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let Transaction of Transactions">
+        <th>{{ "#" + Transaction.id }}</th>
+        <th>{{ Transaction.customerName }}</th>
+        <th>{{ Transaction.userName }}</th>
+        <th>{{ Transaction.transactionType }}</th>
+        <th>{{ Transaction.transactionDate | date : "yyyy/MM/dd" }}</th>
+
+        <th>{{ Transaction.amount }}</th>
+        <th>{{ Transaction.description }}</th>
+      </tr>
+    </tbody>
+  </table>
+</div>
